@@ -1,0 +1,16 @@
+[project]
+name = "taskybot"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+        "vllm==0.9.1",
+        "transformers>=4.51.3", # Pinned for vLLM
+        "torch>=2.6.0",         # Pinned for vLLM
+        "discord-py>=2.5.2",
+        "wandb>=0.21.1",
+]
+
+[project.optional-dependencies]
+gpu = ["torch", "xformers"]
