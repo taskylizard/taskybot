@@ -1,3 +1,8 @@
+## taskybot
+
+> [!IMPORTANT]
+> This is just a code dump for learning purposes. You'll probably want to modify this for production use.
+
 State of the art™ shitposting technology made by the cringe.
 
 This uses my discord data request to scrape messages, fine-tune a model, and then use it to respond to mentions in whitelisted discord channels.
@@ -16,7 +21,8 @@ The fine-tuning implementation uses torchtune, a PyTorch library for easily conf
 
 ### Inference work
 
-I use vLLM to run the fine-tuned model. It supports LoRA adapters out of the box. It can remain fast at `~25 tok/s` on a single A100 GPU, thanks to prefix caching and keeping its cache warm on a hard volume. Important variables for that are: `enforce_eager=True`, `enable_prefix_caching=True`, and `tensor_parallel_size` set to how many GPUs you have.
+I use vLLM to run the fine-tuned model. It supports LoRA adapters out of the box. It can remain fast at `~25 tok/s` on a single A100 GPU, thanks to prefix caching and keeping its cache warm on a hard volume. Important variables for that are: `enforce_eager` disables both Torch compilation and CUDA graph capture, `enable_prefix_caching` allows the vLLM engine to reuse cached KV (key-value) pairs from previous prompts if a new query shares the same
+prefix, and `tensor_parallel_size` is set to assume multiple GPUs are for splitting up large matrix multiplications.
 
 See the `inference.py` file for the code that runs the model. It's not much to look at, but it's a good example of how to use vLLM progmatically.
 
